@@ -254,6 +254,42 @@ public class MySudokuBoard {
 
       return true;
    }
+
+   public boolean solve() {
+      
+      boolean boardSolved = false;
+
+      // Base Case: invalid board
+      if (!isValid()) {
+         return false;
+      }
+
+      //Base Case: board is already solved
+      if (isSolved()) {
+         return true;
+      }
+
+      // Solve with recursion
+      for (int row = 0; row < 9; row++) {
+         for (int col = 0; col < 9; col++) {
+            if (board[row][col] == ' ') {
+               // Check digits 1-9 as a solution
+               for (char digit = '1'; digit <= '9'; digit++) {
+                  board[row][col] = digit;
+
+                  if (isValid() && solve()) {
+                     return true;
+                  }
+
+                  board[row][col] = ' ';
+               }
+               return false;
+            }
+         }
+      }
+      return isSolved();
+   }
+    
 }
 
 
